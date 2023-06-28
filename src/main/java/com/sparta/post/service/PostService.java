@@ -62,9 +62,4 @@ public class PostService {
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
         );
     }
-
-    //2주차 과제
-    public List<PostResponseDto> getPostsByKeyword(String keyword){
-        return postRepository.findByContentsContainsOrderByModifiedAtDesc(keyword).stream().map(PostResponseDto::new).toList();
-    }
 }

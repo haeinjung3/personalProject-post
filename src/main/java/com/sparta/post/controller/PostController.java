@@ -15,7 +15,6 @@ public class PostController {
 
     private final PostService postService;
 
-    // /api가 불려질 때 생성자가 사용되나?
     public PostController(PostService postService) {
         this.postService = postService;
     }
@@ -29,12 +28,6 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostResponseDto> getPosts() {
         return postService.getPosts();
-    }
-
-    //2주차 과제
-    @GetMapping("/posts/contents")
-    public List<PostResponseDto> getPostsByKeyword(String keyword){
-        return postService.getPostsByKeyword(keyword);
     }
 
     @PutMapping("/posts/{id}")
