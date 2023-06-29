@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="/js/basic.js"></script>
     <title>Post Service</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -391,6 +398,19 @@
         <p>
             공유하고 싶은 소식을 입력해주세요.
         </p>
+        <div id="login-true" style="display: none">
+            <a id="login-text" href="javascript:logout()">
+                로그아웃
+            </a>
+        </div>
+        <div id="login-false" >
+            <a id="sign-text" href="/api/user/signup">
+                회원가입
+            </a>
+            <a id="login-text" href="/api/user/login-page">
+                로그인
+            </a>
+        </div>
     </div>
     <div class="area-write">
         <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
