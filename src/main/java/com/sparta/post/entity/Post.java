@@ -20,8 +20,12 @@ public class Post extends Timestamped{
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Post(PostRequestDto requestDto){
-        this.username = requestDto.getUsername();
+        this.username = new String(user.getUsername());
         this.contents = requestDto.getContents();
     }
 
