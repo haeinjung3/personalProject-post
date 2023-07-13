@@ -38,12 +38,20 @@ public class PostController {
     }
 
     @PutMapping("/posts/{id}")
-    public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
-        return postService.updatePost(id,requestDto);
+    public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
+        String token = jwtUtil.substringToken(tokenValue);
+        if(!jwtUtil.validateToken(token)) {
+            throw new IllegalArgumentException("Token Error");
+        }
+        return postService.updatePost(id,requestDto, userDetails.getUser());
     }
 
     @DeleteMapping("/posts/{id}")
-    public Long deletePost(@PathVariable Long id) {
-        return postService.deletePost(id);
+    public Long deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
+        String token = jwtUtil.substringToken(tokenValue);
+        if(!jwtUtil.validateToken(token)) {
+            throw new IllegalArgumentException("Token Error");
+        }
+        return postService.deletePost(id, userDetails.getUser());
     }
 }

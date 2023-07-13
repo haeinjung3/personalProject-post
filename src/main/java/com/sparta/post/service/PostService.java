@@ -1,15 +1,19 @@
 package com.sparta.post.service;
 
+import com.sparta.post.entity.User;
+
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
 import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.repository.PostRepository;
 import com.sparta.post.security.UserDetailsImpl;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Service
 public class PostService {
@@ -39,10 +43,13 @@ public class PostService {
     }
 
     @Transactional
-    public Long updatePost(Long id, PostRequestDto requestDto) {
+    public Long updatePost(Long id, PostRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
-
+        // 해당 사용자인지 확인
+        if(!post.getUser().equals(user)){
+            throw new RejectedExecutionException("본인 외에는 수정/삭제할 수 없습니다.");
+        }
         // post 내용 수정
         post.update(requestDto);
 
@@ -50,9 +57,13 @@ public class PostService {
     }
 
 
-    public Long deletePost(Long id) {
+    public Long deletePost(Long id, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
+        // 해당 사용자인지 확인
+        if(!post.getUser().equals(user)){
+            throw new RejectedExecutionException("본인 외에는 수정/삭제할 수 없습니다.");
+        }
         // post 삭제
         postRepository.delete(post);
 
