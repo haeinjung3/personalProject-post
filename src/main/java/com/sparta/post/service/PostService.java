@@ -1,14 +1,14 @@
 package com.sparta.post.service;
 
-import com.sparta.post.entity.User;
+
 
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
+import com.sparta.post.entity.User;
 import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.repository.PostRepository;
 import com.sparta.post.security.UserDetailsImpl;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +32,7 @@ public class PostService {
         Post savePost = postRepository.save(post);
 
         // Entity -> ResponseDto
-        PostResponseDto postResponseDto = new PostResponseDto(post);
+        PostResponseDto postResponseDto = new PostResponseDto(savePost);
 
         return postResponseDto;
     }
@@ -47,8 +47,8 @@ public class PostService {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
         // 해당 사용자인지 확인
-        if(!post.getUser().equals(user)){
-            throw new RejectedExecutionException("본인 외에는 수정/삭제할 수 없습니다.");
+        if (!post.getUser().getUsername().equals(user.getUsername())){
+            throw new RejectedExecutionException();
         }
         // post 내용 수정
         post.update(requestDto);
@@ -61,8 +61,8 @@ public class PostService {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
         // 해당 사용자인지 확인
-        if(!post.getUser().equals(user)){
-            throw new RejectedExecutionException("본인 외에는 수정/삭제할 수 없습니다.");
+        if (!post.getUser().getUsername().equals(user.getUsername())){
+            throw new RejectedExecutionException();
         }
         // post 삭제
         postRepository.delete(post);
