@@ -3,7 +3,9 @@ package com.sparta.post.service;
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
+import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.repository.PostRepository;
+import com.sparta.post.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +16,13 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, JwtUtil jwtUtil) {
         this.postRepository = postRepository;
     }
 
-    public PostResponseDto createPost(PostRequestDto requestDto) {
+    public PostResponseDto createPost(PostRequestDto requestDto, UserDetailsImpl userDetails) {
         // RequestDto -> Entity
-        Post post = new Post(requestDto);
+        Post post = new Post(requestDto, userDetails);
 
         // DB 저장
         Post savePost = postRepository.save(post);

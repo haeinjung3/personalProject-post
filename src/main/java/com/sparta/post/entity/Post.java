@@ -1,6 +1,7 @@
 package com.sparta.post.entity;
 
 import com.sparta.post.dto.PostRequestDto;
+import com.sparta.post.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,8 @@ public class Post extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Post(PostRequestDto requestDto){
-        this.username = new String(user.getUsername());
+    public Post(PostRequestDto requestDto, UserDetailsImpl userDetails){
+        this.username = userDetails.getUsername();  //null
         this.contents = requestDto.getContents();
     }
 
