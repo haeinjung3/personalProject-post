@@ -6,6 +6,7 @@ import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
 import com.sparta.post.entity.User;
+import com.sparta.post.entity.UserRoleEnum;
 import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.repository.PostRepository;
 import com.sparta.post.security.UserDetailsImpl;
@@ -46,8 +47,8 @@ public class PostService {
     public Long updatePost(Long id, PostRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
-        // 해당 사용자인지 확인
-        if (!post.getUser().getUsername().equals(user.getUsername())){
+        // 해당 사용자인지 확인 + 관리자인지 확인
+        if (!post.getUser().getUsername().equals(user.getUsername()) && !post.getUser().getRole().equals(UserRoleEnum.ADMIN)){
             throw new RejectedExecutionException();
         }
         // post 내용 수정
@@ -60,8 +61,8 @@ public class PostService {
     public Long deletePost(Long id, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
-        // 해당 사용자인지 확인
-        if (!post.getUser().getUsername().equals(user.getUsername())){
+        // 해당 사용자인지 확인 + 관리자인지 확인
+        if (!post.getUser().getUsername().equals(user.getUsername()) && !post.getUser().getRole().equals(UserRoleEnum.ADMIN)){
             throw new RejectedExecutionException();
         }
         // post 삭제

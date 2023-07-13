@@ -1,5 +1,6 @@
 package com.sparta.post.jwt;
 
+import com.sparta.post.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -38,6 +39,7 @@ public class JwtUtil {
     // 로그 설정
     public static final Logger logger = LoggerFactory.getLogger("JWT 관련 로그");
 
+    //시크릿키를 디코딩한 뒤에 키에 넣음
     @PostConstruct
     public void init() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
@@ -45,7 +47,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username) {
+    public String createToken(String username, UserRoleEnum user) {
         Date date = new Date();
 
         return BEARER_PREFIX +

@@ -1,5 +1,6 @@
 package com.sparta.post.auth;
 
+import com.sparta.post.entity.UserRoleEnum;
 import com.sparta.post.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
@@ -65,7 +66,7 @@ public class AuthController {
     @GetMapping("/create-jwt")
     public String createJwt(HttpServletResponse res) {
         // Jwt 생성
-        String token = jwtUtil.createToken("Robbie");
+        String token = jwtUtil.createToken("Robbie", UserRoleEnum.USER);
 
         // Jwt 쿠키 저장
         jwtUtil.addJwtToCookie(token, res);
