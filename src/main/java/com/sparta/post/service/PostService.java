@@ -48,7 +48,7 @@ public class PostService {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
         // 해당 사용자인지 확인 + 관리자인지 확인
-        if (!post.getUser().getUsername().equals(user.getUsername()) && !post.getUser().getRole().equals(UserRoleEnum.ADMIN)){
+        if (!(post.getUser().getUsername().equals(user.getUsername())) && !(user.getRole().equals(UserRoleEnum.ADMIN))){
             throw new RejectedExecutionException();
         }
         // post 내용 수정
@@ -62,7 +62,7 @@ public class PostService {
         // 해당 메모가 DB에 존재하는지 확인
         Post post = findPost(id);
         // 해당 사용자인지 확인 + 관리자인지 확인
-        if (!post.getUser().getUsername().equals(user.getUsername()) && !post.getUser().getRole().equals(UserRoleEnum.ADMIN)){
+        if (!(post.getUser().getUsername().equals(user.getUsername())) && !(user.getRole().equals(UserRoleEnum.ADMIN))){
             throw new RejectedExecutionException();
         }
         // post 삭제
